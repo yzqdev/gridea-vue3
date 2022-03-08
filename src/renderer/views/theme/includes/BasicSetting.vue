@@ -1,7 +1,7 @@
 <template>
   <div>
       <el-form :form="form" style="padding-bottom: 48px;">
-        <el-form-item :label="$t('selectTheme')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item :label="$t('selectTheme')"   :colon="false">
           <el-select v-model="form.themeName" optionLabelProp="name">
             <el-option v-for="item in site.themes" :key="item.folder" :name="item.name" :value="item.folder">
               <div class="theme-option">
@@ -15,7 +15,7 @@
               </div>
             </el-option>
             <div slot="dropdownRender" slot-scope="menu">
-              <v-nodes :vnodes="menu"/>
+<!--              <v-nodes :vnodes="menu"/>-->
               <el-divider style="margin: 4px 0;" />
               <div class="p-2 flex items-center cursor-pointer" @click="openPage('https://gridea.dev/themes/')">
                 <i class="ri-t-shirt-line mr-2"></i> {{ $t('moreThemes') }}
@@ -24,40 +24,40 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item :label="$t('siteName')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item :label="$t('siteName')"   :colon="false">
           <el-input v-model="form.siteName" />
         </el-form-item>
 
-        <el-form-item :label="$t('siteDescription')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item :label="$t('siteDescription')"   :colon="false">
           <el-input type="textarea" v-model="form.siteDescription" />
           <div class="tip-text">{{ $t('htmlSupport') }}</div>
         </el-form-item>
-        <el-form-item :label="$t('footerInfo')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item :label="$t('footerInfo')"   :colon="false">
           <el-input type="textarea" v-model="form.footerInfo" />
           <div class="tip-text">{{ $t('htmlSupport') }}</div>
         </el-form-item>
-        <el-form-item :label="$t('isShowFeatureImage')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item :label="$t('isShowFeatureImage')"   :colon="false">
           <el-switch v-model="form.showFeatureImage" />
         </el-form-item>
-        <el-form-item :label="$t('articlesPerPage')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item :label="$t('articlesPerPage')"   :colon="false">
           <el-slider v-model="form.postPageSize" :min="0" :max="50" />
         </el-form-item>
-        <el-form-item :label="$t('archivesPerPage')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item :label="$t('archivesPerPage')"   :colon="false">
           <el-slider v-model="form.archivesPageSize" :min="0" :max="100" />
         </el-form-item>
-        <el-form-item :label="$t('articleDefault')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item :label="$t('articleDefault')"   :colon="false">
           <el-radio-group name="postUrlFormat" v-model="form.postUrlFormat">
             <el-radio v-for="item in urlFormats" :key="item.value" :value="item.value">{{ item.text }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item :label="$t('tagDefault')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item :label="$t('tagDefault')"   :colon="false">
           <el-radio-group name="tagUrlFormat" v-model="form.tagUrlFormat">
             <el-radio v-for="item in urlFormats" :key="item.value" :value="item.value">{{ item.text }}</el-radio>
           </el-radio-group>
         </el-form-item>
 
 
-        <el-form-item :label="$t('articleUrlPath')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item :label="$t('articleUrlPath')"   :colon="false">
           <el-radio-group name="postPath" v-model="form.postPath">
             <el-tooltip placement="bottom" title="example.com/post/xxx">
               <el-radio value="post">{{$t('default')}}</el-radio>
@@ -68,7 +68,7 @@
           </el-radio-group>
         </el-form-item>
 
-        <el-form-item :label="$t('tagUrlPath')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item :label="$t('tagUrlPath')"   :colon="false">
           <el-radio-group name="tagPath" v-model="form.tagPath">
             <el-tooltip placement="bottom" title="example.com/tag/xxx">
               <el-radio value="tag">{{$t('default')}}</el-radio>
@@ -79,30 +79,28 @@
           </el-radio-group>
         </el-form-item>
 
-        <ValidationProvider name="archivesPath" rules="required" v-slot="slotProps">
+
           <el-form-item
             :label="$t('archivePathPrefix')"
             :labelCol="formLayout.label"
             :wrapperCol="formLayout.wrapper"
             :colon="false"
-            :validateStatus="resolveState(slotProps)"
-            :help="slotProps.errors[0]"
           >
             <el-input v-model="form.archivesPath" />
           </el-form-item>
-        </ValidationProvider>
 
-        <el-form-item :label="$t('dateFormat')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+
+        <el-form-item :label="$t('dateFormat')"   :colon="false">
           <el-input v-model="form.dateFormat" />
           <div><a @click.prevent="openPage('http://momentjs.cn/docs/#/displaying/format/')">Momentjs Format</a></div>
         </el-form-item>
-        <el-form-item label="RSS/Feed" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item label="RSS/Feed"   :colon="false">
           <el-radio-group name="tagUrlFormat" v-model="form.feedFullText">
             <el-radio :value="true">{{$t('showFullText')}}</el-radio>
             <el-radio :value="false">{{$t('showAbstractOnly')}}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item :label="$t('numberArticlesRSS')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+        <el-form-item :label="$t('numberArticlesRSS')"   :colon="false">
           <el-input-number :min="0" :max="10000" v-model="form.feedCount" />
         </el-form-item>
         <footer-box>
@@ -187,15 +185,9 @@ function openPage(url: string) {
   shell.openExternal(url)
 }
 
-function resolveState({ errors }: { errors: any }) {
-  if (errors[0]) {
-    return 'error'
-  }
 
-  return ''
-}
 onMounted(() => {
-  const config = site.themeConfig
+  const config = site.themeConfig.value
 
   state.form.themeName = config.themeName
   state.form.postPageSize = config.postPageSize
@@ -215,7 +207,7 @@ onMounted(() => {
 })
  function   saveTheme() {
    ipcRenderer.send('theme-save', state.form)
-   ipcRenderer.once('theme-saved', async (event: IpcRendererEvent, result: any) => {
+   ipcRenderer.once('theme-saved', async (event , result: any) => {
      await this.$bus.$emit('site-reload')
       await router.push({name: 'loading', query: {redirect: 'theme?tab=basic'}})
      this.$message.success( t('themeConfigSaved').toString())

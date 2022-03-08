@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="currentThemeConfig.length > 0" style="padding-bottom: 48px;">
-      <el-tabs tabPosition="left" defaultActiveKey="1" v-model="activeKey">
+      <el-tabs tabPosition="left"   v-model="activeKey">
         <el-tab-pane :tab="group" v-for="(group, index) in groups" :key="index + 1">
           <div v-for="(item, index1) in currentThemeConfig" :key="index1">
             <el-form-item v-if="item.group === group" :label="item.label" :colon="false" :help="item.note">
@@ -205,9 +205,10 @@ let router=useRouter()
 let route=useRoute()
 let site=storeToRefs(store)
 let state=reactive({
-  form:{}
+  form:{},
+  activeKey:''
 })
-let {form}=toRefs(state)
+let {form,activeKey}=toRefs(state)
 onMounted(() => {
   loadCustomConfig()
 })
@@ -223,12 +224,12 @@ function getPostTitleByLink(link: string) {
 
 function loadCustomConfig() {
   const keys = Object.keys(this.site.themeCustomConfig || {})
-  keys.forEach((key: string) => {
-    this.$set(this.form, key, this.site.themeCustomConfig[key])
-  })
+  // keys.forEach((key: string) => {
+  //   this.$set(this.form, key, this.site.themeCustomConfig[key])
+  // })
   this.currentThemeConfig.forEach((item: any) => {
-    if (this.form[item.name] === undefined) {
-      this.$set(this.form, item.name, item.value)
+    if (state.form[item.name] === undefined) {
+      // this.$set(this.form, item.name, item.value)
     }
   })
 }
