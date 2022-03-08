@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="flex">
-        <el-input-search
+        <el-input
             class="search-input"
             :placeholder="$t('searchArticle')"
             style="width: 200px"

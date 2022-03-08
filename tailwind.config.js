@@ -4,7 +4,7 @@ module.exports = {
   separator: ':',
   content: [
 
-    './src/**/*.{html,js,vue}',
+    './src/renderer/index.html', './src/**/*.{vue,js,ts,jsx,tsx}'
   ],
   theme: {
     screens: {
