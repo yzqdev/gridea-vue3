@@ -1,11 +1,11 @@
 <template>
   <div>
-    <el-form :form="form" style="padding-bottom: 48px;">
+    <el-form :form="form" style="padding-bottom: 48px;" label-width="120px">
       <el-form-item :label="$t('platform')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
         <el-radio-group name="platform" v-model="form.platform">
-          <el-radio value="github">Github Pages</el-radio>
-          <el-radio value="coding">Coding Pages</el-radio>
-          <el-radio value="sftp">SFTP</el-radio>
+          <el-radio label="github">Github Pages</el-radio>
+          <el-radio label="coding">Coding Pages</el-radio>
+          <el-radio label="sftp">SFTP</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item :label="$t('domain')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
@@ -81,13 +81,18 @@
 </template>
 
 <script setup lang="ts">
+import useSiteStore from "@store/site";
+
 const { ipcRenderer } = require("electron");
 import {  IpcRendererEvent } from 'electron'
-import FooterBox from '../../../components/FooterBox/Index.vue'
+import FooterBox from '@renderer/components/FooterBox.vue'
 import { ISetting } from '../../../interfaces/setting'
 import {computed, onMounted, reactive, toRefs, watch, watchEffect} from "vue";
 import {useI18n} from "vue-i18n";
+import {storeToRefs} from "pinia";
 let {t}=useI18n()
+let store=useSiteStore()
+let site=storeToRefs(store)
 let state=reactive({
   protocol:'https://',
   form:{
@@ -158,7 +163,7 @@ async function remoteDetect() {
   })
 }
 onMounted(() => {
-  const { form, site: { setting } } = state
+ let {setting}=site
   console.log('setting', setting)
   Object.keys(form).forEach((key: string) => {
     if (key === 'domain') {

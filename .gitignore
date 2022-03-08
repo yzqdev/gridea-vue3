@@ -17,3 +17,4 @@ build/
 *.sln
 updater.exe
 yarn.lock
+*.bak

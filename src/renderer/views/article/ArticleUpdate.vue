@@ -324,14 +324,14 @@ import MonacoMarkdownEditor from "../../components/MonacoMarkdownEditor/Index.vu
 import EmojiCard from "../../components/EmojiCard/Index.vue";
 import slug from "@helpers/slug";
 import { IPost } from "../../interfaces/post";
-import {Site, siteStore} from "../../store/modules/site";
+import useSiteStore,{Site, } from "../../store/modules/site";
 import { UrlFormats } from "@helpers/enums";
 import shortcutKeys from "@helpers/shortcut-keys";
 import {computed, onMounted, reactive, ref, toRefs} from "vue";
 import {storeToRefs} from "pinia";
 let {t}=useI18n()
-let store=siteStore()
-let {site}=storeToRefs(store)
+let store=useSiteStore()
+let site=storeToRefs(store)
 let state=reactive({
   postSettingsVisible : false,
 

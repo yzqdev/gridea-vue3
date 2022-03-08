@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router'
+import {RouteRecordRaw} from 'vue-router'
 import Main from "../components/Main.vue";
 // import ArticleUpdate from './views/article/ArticleUpdate.vue'
 import Articles from "../views/article/Articles.vue";
@@ -8,13 +8,14 @@ import Theme from "../views/theme/Index.vue";
 import Setting from "../views/setting/Index.vue";
 import Loading from "../views/Loading.vue";
 import Test from '../components/Test.vue'
+
 const routes: Array<RouteRecordRaw> = [
-    { path: '/:pathMatch(.*)*', component: () => import("@renderer/views/404.vue") },
+    {path: '/:pathMatch(.*)*', component: () => import("@renderer/views/404.vue")},
     // { path: '/', name: '总览', component: () => import('@renderer/components/LandingPage.vue') },
     {
         path: "/",
         name: "main",
-        component:Main,
+        component: Main,
         children: [
             {
                 path: "/articles",
@@ -47,9 +48,14 @@ const routes: Array<RouteRecordRaw> = [
                 component: Loading,
             },
             {
-                path: "/",
+                path: "",
                 redirect: "/articles",
             },
+            // {
+            //     path: "",
+            //     name: 'test',
+            //     component: Test,
+            // },
         ],
     }
 ]

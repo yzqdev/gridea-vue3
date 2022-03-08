@@ -16,15 +16,15 @@
 </template>
 
 <script setup lang="ts">
-import { ipcRenderer, IpcRendererEvent, shell } from 'electron'
-import {siteStore} from "@store/site";
+const {shell}=require('electron')
+import useSiteStore from "@store/site";
 import {storeToRefs} from "pinia";
 import {onMounted, reactive, toRefs} from "vue";
 function openPage(url: string) {
   shell.openExternal(url)
 }
-let store=siteStore()
-let {site}=storeToRefs(store)
+let store=useSiteStore()
+let site=storeToRefs(store)
 let state=reactive({
   form : {
     shortname: '',

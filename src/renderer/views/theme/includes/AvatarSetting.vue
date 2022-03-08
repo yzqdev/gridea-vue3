@@ -30,17 +30,17 @@
 const { ipcRenderer}=require('electron')
 import {  IpcRendererEvent } from 'electron'
 import * as path from 'path'
-import FooterBox from '../../../components/FooterBox/Index.vue'
+import FooterBox from '@renderer/components/FooterBox.vue'
 import {onMounted, reactive, ref, toRefs} from "vue";
-import {siteStore} from "@store/site";
+import useSiteStore from "@store/site";
 import {storeToRefs} from "pinia";
 let state=reactive({
   file:'',
   avatarPath:''
 })
-let store=siteStore()
+let store=useSiteStore()
 //@ts-ignore
-let {site }=storeToRefs(store)
+let  site  =storeToRefs(store)
 let {file,avatarPath}=toRefs(state)
  function submit() {
    if (!file.value) {

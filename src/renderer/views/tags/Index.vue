@@ -56,15 +56,15 @@ const {ipcRenderer}=require('electron')
 import {   IpcRendererEvent } from 'electron'
 import shortid from 'shortid'
 import slug from '@helpers/slug'
-import {Site, siteStore} from '../../store/modules/site'
+import useSiteStore,{Site, } from '../../store/modules/site'
 import { UrlFormats } from '@helpers/enums'
 import { ITag } from '../../interfaces/tag'
 import {computed, reactive} from "vue";
 import {storeToRefs} from "pinia";
 import {useI18n} from "vue-i18n";
 let {t}=useI18n()
-const store:any = siteStore()
-let {site}=storeToRefs(store)
+const store  = useSiteStore()
+let site=storeToRefs(store)
 let state=reactive({
   visible:false,
   isUpdate : false,

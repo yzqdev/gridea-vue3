@@ -120,8 +120,8 @@
 const { ipcRenderer,  shell } =require('electron')
 
 import { useField } from 'vee-validate'
-import FooterBox from '../../../components/FooterBox/Index.vue'
-import {Site, siteStore} from '../../../store/modules/site'
+import FooterBox from '@renderer/components/FooterBox.vue'
+import useSiteStore,{Site, } from '../../../store/modules/site'
 import {
   UrlFormats,
   DEFAULT_POST_PAGE_SIZE,
@@ -180,8 +180,8 @@ let state=reactive({
   urlFormats : UrlFormats
 })
 let {formLayout,lCol,wCol,urlFormats,form}=toRefs(state)
-let store=siteStore()
-let {site}=storeToRefs(store)
+let store=useSiteStore()
+let site=storeToRefs(store)
 let route=useRoute()
 let router=useRouter()
 let {t}=useI18n()

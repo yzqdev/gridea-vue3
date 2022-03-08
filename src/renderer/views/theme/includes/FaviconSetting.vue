@@ -30,17 +30,17 @@
 const {ipcRenderer} =require('electron')
 import {   IpcRendererEvent } from 'electron'
 import   path from 'path'
-import FooterBox from '../../../components/FooterBox/Index.vue'
+import FooterBox from '@renderer/components/FooterBox.vue'
 import {onMounted, reactive, toRefs} from "vue";
-import {siteStore} from "@store/site";
+import useSiteStore from "@store/site";
 import {storeToRefs} from "pinia";
 
 let state=reactive({
   file:null,
   faviconPath:''
 })
-let store=siteStore()
-let {site}=storeToRefs(store)
+let store=useSiteStore()
+let site=storeToRefs(store)
 let {file,faviconPath}=toRefs(state)
 function beforeUpload(file: any) {
   if (!file) {

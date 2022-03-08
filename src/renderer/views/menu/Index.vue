@@ -85,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import {siteStore} from "@store/site";
+import useSiteStore from "@store/site";
 
 const { ipcRenderer,IpcRendererEvent } = require("electron");
 import urlJoin from 'url-join'
@@ -103,8 +103,8 @@ interface IForm {
   openType: string
   link: string
 }
-let store=siteStore()
-let {site}=storeToRefs(store)
+let store=useSiteStore()
+let site=storeToRefs(store)
 let state=reactive({
   form: {
     name: '',

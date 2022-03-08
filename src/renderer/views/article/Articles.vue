@@ -130,7 +130,7 @@
           :visible="articleUpdateVisible"
           :articleFileName="currentArticleFileName"
           @close="close"
-          @fetchData="$bus.$emit('site-reload')"
+          @fetchData="updateSite"
       ></article-update>
     </div>
   </div>
@@ -143,9 +143,11 @@ const { ipcRenderer } = require("electron");
 import {   IpcRendererEvent } from "electron";
 import { IPost } from "../../interfaces/post";
 import ArticleUpdate from "./ArticleUpdate.vue";
-import {siteStore} from "@store/site";
+
 import {storeToRefs} from "pinia";
 import {useI18n} from "vue-i18n";
+import useStoreTemplate from "@store/template";
+import useSiteStore, {Site} from "@store/site";
 let {t}=useI18n()
 let state=reactive({
   articleUpdateVisible : false,
@@ -163,20 +165,30 @@ let state=reactive({
   pageSize : 20,
 })
 let {articleUpdateVisible,currentArticleFileName,selectedPost,keyword,searchInputVisible,currentPage,pageSize}=toRefs(state)
-let store=siteStore()
-let {site}=storeToRefs(store)
+let store=useSiteStore()
+let site =storeToRefs(store)
+let templateStore=useStoreTemplate()
+let {testData}=storeToRefs(templateStore)
 function  handleSearchInputBlur() {
-  if (!this.keyword) {
-    this.searchInputVisible = false;
+  if (!state.keyword) {
+    state.searchInputVisible = false;
   }
 }
-let postList:any=computed(() => {
-  return  site.posts.filter((item: IPost) =>
+function updateSite(){
+  store.updateSite(site)
+}
+// console.log(store)
+console.log(`%c打印site`,`color:red;font-size:16px;background:transparent`)
+console.log(testData)
+console.log(site.posts)
+let postList=computed(() => {
+  return  site.posts.value.filter((item: IPost) =>
       item.data.title.toLowerCase().includes(state.keyword.toLowerCase())
   );
 })
+console.log(postList.value)
 let currentPostList=computed(() => {
-  return  postList.slice(
+  return  postList.value.slice(
       (state.currentPage - 1) * state.pageSize,
       state.currentPage * state.pageSize
   );
@@ -268,7 +280,7 @@ function onSearch(val: string) {
   state.keyword = val;
 }
 onMounted(() => {
-  this.$bus.$emit("site-reload");
+  store.updateSite(JSON.parse(localStorage.getItem("sourceFolder")));
 })
 watch(()=>state.keyword,() => {
   state.currentPage = 1;

@@ -22,21 +22,21 @@
 
 import {onMounted, ref} from "vue";
 
-  let formLayout = {
-    label: { span: 5 },
-    wrapper: { span: 12 },
-  }
+let formLayout = {
+  label: {span: 5},
+  wrapper: {span: 12},
+}
 
-  let currentLanguage = ref('zhHans')
+let currentLanguage = ref('zhHans')
 onMounted(() => {
-   currentLanguage.value = localStorage.getItem('language') || 'zhHans'
+  currentLanguage.value = localStorage.getItem('language') || 'zhHans'
 })
 
 
- function saveLanguage() {
-    localStorage.setItem('language',  currentLanguage.value)
-    this.$root.$i18n.locale = currentLanguage.value
-  }
+function saveLanguage() {
+  localStorage.setItem('language', currentLanguage.value)
+  this.$root.$i18n.locale = currentLanguage.value
+}
 </script>
 
 <style lang="scss" scoped>

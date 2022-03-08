@@ -27,13 +27,12 @@
 </template>
 
 <script setup lang="ts">
-const {ipcRenderer} =require('electron')
-const { app, dialog }= require("@electron/remote")
-import {siteStore} from "@store/site";
+const {ipcRenderer,app,dialog} =require('electron')
+import useSiteStore from "@store/site";
 import {storeToRefs} from "pinia";
 import {onMounted, reactive, toRefs} from "vue";
-let store=siteStore()
-let {site}=storeToRefs(store)
+let store=useSiteStore()
+let site=storeToRefs(store)
 
 let state=reactive({
   formLayout : {
@@ -71,7 +70,7 @@ async function handleFolderSelect() {
   }
 }
  onMounted(() => {
-   state.currentFolderPath = site.appDir;
+   state.currentFolderPath = site.appDir.value;
  })
 </script>
 

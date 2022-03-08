@@ -1,13 +1,14 @@
 <template>
   <div>
+
     <el-form :form="form" style="padding-bottom: 48px;">
-      <el-form-item :label="$t('platform')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+      <el-form-item :label="$t('platform')" :colon="false">
         <el-radio-group name="commentPlatform" v-model="form.commentPlatform">
-          <el-radio value="gitalk">Gitalk</el-radio>
-          <el-radio value="disqus">Disqus</el-radio>
+          <el-radio label="gitalk">Gitalk</el-radio>
+          <el-radio label="disqus">Disqus</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item :label="$t('isShowComment')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
+      <el-form-item :label="$t('isShowComment')"   :colon="false">
         <el-switch v-model="form.showComment" />
       </el-form-item>
       <gitalk-setting ref="gitalkSetting" v-show="form.commentPlatform === 'gitalk'"></gitalk-setting>
@@ -22,23 +23,24 @@
 </template>
 
 <script  setup lang="ts">
-const { ipcRenderer,  } =require('electron')
-import {IpcRendererEvent} from 'electron';
+const { ipcRenderer  } =require('electron')
 import GitalkSetting from './GitalkSetting.vue'
 import DisqusSetting from './DisqusSetting.vue'
-import FooterBox from '../../../components/FooterBox/Index.vue'
-import {onMounted, reactive, ref, toRef} from "vue";
-import {siteStore} from "@store/site";
+import FooterBox from '@renderer/components/FooterBox.vue'
+import {onMounted, reactive, ref, toRef, toRefs} from "vue";
+import useSiteStore from "@store/site";
 import {storeToRefs} from "pinia";
 import {useI18n} from "vue-i18n";
 let form=reactive({
   commentPlatform: 'gitalk',
   showComment: false,
 })
+
+
 let {t}=useI18n()
 let gitalkSetting=ref(null)
 let disqusSetting=ref(null)
-const store = siteStore()
+const store = useSiteStore()
  function submit() {
    const form = {
      ...this.form,
@@ -47,7 +49,7 @@ const store = siteStore()
    }
    console.log('click comment setting save', form)
    ipcRenderer.send('comment-setting-save', form)
-   ipcRenderer.once('comment-setting-saved', (event: IpcRendererEvent, result: any) => {
+   ipcRenderer.once('comment-setting-saved', (event , result: any) => {
      this.$bus.$emit('site-reload')
      this.$message.success( t('commentSettingSuccess').toString())
 

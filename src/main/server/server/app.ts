@@ -35,7 +35,7 @@ export default class App {
     this.mainWindow = setting.mainWindow
     this.app = setting.app
     this.baseDir = setting.baseDir
-    this.appDir = path.join(this.app.getPath('documents'), 'gridea')
+    this.appDir = path.join(this.app.getPath('documents'), 'gridea-vue3')
     this.previewServer = setting.previewServer
 
     this.db = {
@@ -181,9 +181,9 @@ console.log('app-const')
     // Check if there is a .hve-notes folder, if it exists, load it, otherwise use the default configuration.
     const appConfigFolderOld = path.join(this.app.getPath('home'), '.hve-notes') // < 0.7.7
 
-    const appConfigFolder = path.join(this.app.getPath('home'), '.gridea')
+    const appConfigFolder = path.join(this.app.getPath('home'), '.gridea-vue3')
     const appConfigPath = path.join(appConfigFolder, 'config.json')
-    let defaultAppDir = path.join(this.app.getPath('documents'), 'Gridea')
+    let defaultAppDir = path.join(this.app.getPath('documents'), 'Gridea-vue3')
     defaultAppDir = defaultAppDir.replace(/\\/g, '/')
 
     try {

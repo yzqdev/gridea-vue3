@@ -19,15 +19,15 @@
 </template>
 
 <script setup lang="ts">
-import { ipcRenderer, IpcRendererEvent, shell } from 'electron'
-import {onMounted, reactive} from "vue";
-import {siteStore} from "@store/site";
+import {onMounted, reactive, toRefs} from "vue";
+const {shell}=require('electron')
+import useSiteStore from "@store/site";
 import {storeToRefs} from "pinia";
 function openPage(url: string) {
   shell.openExternal(url)
 }
-let store=siteStore()
-let {site}=storeToRefs(store)
+let store=useSiteStore()
+let site=storeToRefs(store)
 let state=reactive({
   form : {
     clientId: '',
@@ -36,6 +36,7 @@ let state=reactive({
     owner: '',
   }
 })
+let {form}=toRefs(state)
 onMounted(() => {
   const { gitalkSetting } =  site.commentSetting
 

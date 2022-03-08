@@ -192,15 +192,15 @@
 import {   IpcRendererEvent  } from 'electron'
 const {ipcRenderer,shell}=require('electron')
 import urlJoin from 'url-join'
-import {Site, siteStore} from '../../../store/modules/site'
+import useSiteStore,{Site, } from '../../../store/modules/site'
 import MonacoMarkdownEditor from '../../../components/MonacoMarkdownEditor/Index.vue'
-import FooterBox from '../../../components/FooterBox/Index.vue'
+import FooterBox from '@renderer/components/FooterBox.vue'
 import ColorCard from '../../../components/ColorCard/Index.vue'
 import PostsCard from '../../../components/PostsCard/Index.vue'
 import {storeToRefs} from "pinia";
 import {computed, onMounted, reactive, toRefs} from "vue";
 import {useRoute, useRouter} from "vue-router";
-const store=siteStore()
+const store=useSiteStore()
 let router=useRouter()
 let route=useRoute()
 let site=storeToRefs(store)
