@@ -31,12 +31,13 @@ import {onMounted, reactive, ref, toRef, toRefs} from "vue";
 import useSiteStore from "@store/site";
 import {storeToRefs} from "pinia";
 import {useI18n} from "vue-i18n";
-let form=reactive({
-  commentPlatform: 'gitalk',
-  showComment: false,
+let state=reactive({
+  form:{
+    commentPlatform: 'gitalk',
+    showComment: false,
+  }
 })
-
-
+let {form}=toRefs(state)
 let {t}=useI18n()
 let gitalkSetting=ref(null)
 let disqusSetting=ref(null)

@@ -90,6 +90,7 @@ import { ISetting } from '../../../interfaces/setting'
 import {computed, onMounted, reactive, toRefs, watch, watchEffect} from "vue";
 import {useI18n} from "vue-i18n";
 import {storeToRefs} from "pinia";
+import lodash from "lodash";
 let {t}=useI18n()
 let store=useSiteStore()
 let site=storeToRefs(store)
@@ -165,15 +166,16 @@ async function remoteDetect() {
 onMounted(() => {
  let {setting}=site
   console.log('setting', setting)
-  Object.keys(form).forEach((key: string) => {
+  let formClone=lodash.cloneDeep(form)
+  Object.keys(formClone).forEach((key: string) => {
     if (key === 'domain') {
       const protocolEndIndex = setting[key].indexOf('://')
       if (protocolEndIndex !== -1) {
-        form[key] = setting[key].substring(protocolEndIndex + 3)
+        formClone[key] = setting[key].substring(protocolEndIndex + 3)
        state.protocol = setting[key].substring(0, protocolEndIndex + 3)
       }
     } else {
-      form[key] = setting[key]
+      formClone[key] = setting[key]
     }
   })
 

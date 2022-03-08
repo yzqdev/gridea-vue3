@@ -50,7 +50,7 @@
         </el-button>
         <div class="version-container" :class="{ 'version-dot': hasUpdate }">
           <i
-              class="ri-equalizer-line text-base"
+              class="slider-circle-h text-base"
               @click="systemModalVisible = true"
           ></i>
           <i

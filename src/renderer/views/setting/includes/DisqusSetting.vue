@@ -34,7 +34,8 @@ let state=reactive({
 })
 let {form}=toRefs(state)
 onMounted(() => {
-  const { disqusSetting } = site.commentSetting
+
+  const { disqusSetting } = site.commentSetting.value
 
   state.form.shortname = disqusSetting.shortname
   state.form.api = disqusSetting.api

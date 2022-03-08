@@ -5,6 +5,7 @@ import 'element-plus/dist/index.css'
 import './styles/index.scss'
 
 import '@renderer/assets/styles/tailwind.css'
+import '@renderer/assets/styles/main.scss'
 import './permission'
 import App from './App.vue'
 import router from './router'
