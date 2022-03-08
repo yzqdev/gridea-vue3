@@ -187,6 +187,7 @@ function openPage(url: string) {
 
 
 onMounted(() => {
+  store.setAppSite()
   const config = site.themeConfig.value
 
   state.form.themeName = config.themeName
@@ -208,7 +209,8 @@ onMounted(() => {
  function   saveTheme() {
    ipcRenderer.send('theme-save', state.form)
    ipcRenderer.once('theme-saved', async (event , result: any) => {
-     await this.$bus.$emit('site-reload')
+     // await this.$bus.$emit('site-reload')
+     await store.updateSite(JSON.parse(localStorage.getItem("sourceFolder")))
       await router.push({name: 'loading', query: {redirect: 'theme?tab=basic'}})
      this.$message.success( t('themeConfigSaved').toString())
 

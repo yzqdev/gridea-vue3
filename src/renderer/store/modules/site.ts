@@ -108,19 +108,23 @@ export const useStore = defineStore({
     ,
 
     actions: {
-        updateSite(siteData?: Site) {
-            console.log(`%c这是sitedata`, `color:red;font-size:16px;background:transparent`)
-            console.log('data', siteData)
-            const siteFolder = JSON.parse(localStorage.getItem("sourceFolder"));
-
-            ipcRenderer.send("app-site-reload", {siteFolder});
+        setAppSite( ){
+            ipcRenderer.send("app-site-reload" );
             ipcRenderer.once(
                 "app-site-loaded",
                 (event, result: Site) => {
                     console.log(result);
+                    this.themes=result.themes
                     // store.updateSite(JSON.parse(localStorage.getItem("sourceFolder")));
                 }
             );
+        },
+        updateSite(siteData?: Site) {
+            console.log(`%c这是sitedata`, `color:red;font-size:16px;background:transparent`)
+            console.log('data', siteData)
+            const siteFolder = JSON.parse(localStorage.getItem("sourceFolder"));
+let that=this
+
             this.appDir = siteData.appDir
             this.posts = siteData.posts
             this.tags = siteData.tags
