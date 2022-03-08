@@ -50,11 +50,11 @@
         </el-button>
         <div class="version-container" :class="{ 'version-dot': hasUpdate }">
           <i
-              class="slider-circle-h text-base"
+              class="zwicon-slider-circle-h text-base"
               @click="systemModalVisible = true"
           ></i>
           <i
-              class="ri-earth-line web-btn"
+              class="zwicon-earth  web-btn"
               @click="goWeb"
               v-if="site.setting.domain"
           ></i>
@@ -122,10 +122,11 @@
 
     <el-drawer
         title=""
-        placement="bottom"
+        direction="btt"
         height="100%"
         @close="systemModalVisible = false"
-        :visible="systemModalVisible"
+        v-model="systemModalVisible"
+         size="100%"
     >
       <app-system/>
     </el-drawer>

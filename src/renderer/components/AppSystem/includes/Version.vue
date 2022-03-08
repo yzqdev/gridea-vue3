@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import pkg from "../../../../../package.json";
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, toRefs} from "vue";
 function  saveLanguage() {
   localStorage.setItem("language", this.currentLanguage);
   this.$root.$i18n.locale = this.currentLanguage;
@@ -20,10 +20,11 @@ let state=reactive({
     wrapper: { span: 12 },
   },
 
-  version: (pkg as any).version,
+  version: pkg.version,
 
   currentLanguage : "zhHans"
 })
+let {version,currentLanguage}=toRefs(state)
  onMounted(() => {
    state.currentLanguage = localStorage.getItem("language") || "zhHans";
  })

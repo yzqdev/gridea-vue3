@@ -14,14 +14,14 @@
       </div>
     </div>
     <el-drawer
-      :title="$t('tag')"
+      :title="t('tag')"
       width="400"
       :visible="visible"
       @close="close"
       :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
     >
       <el-form :form="form" layout="vertical">
-        <el-form-item :label="$t('tagName')">
+        <el-form-item :label="t('tagName')">
           <el-input v-model="form.name" @input="handleNameChange" />
         </el-form-item>
         <el-form-item label="标签 URL">

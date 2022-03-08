@@ -1,6 +1,5 @@
 <template>
   <div>
-    <ValidationObserver ref="observer" v-slot="{ invalid }">
       <el-form :form="form" style="padding-bottom: 48px;">
         <el-form-item :label="$t('selectTheme')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
           <el-select v-model="form.themeName" optionLabelProp="name">
@@ -112,7 +111,6 @@
           </div>
         </footer-box>
       </el-form>
-    </ValidationObserver>
   </div>
 </template>
 

@@ -13,7 +13,8 @@ import {
 } from '@helpers/constants'
 import {defineStore} from "pinia";
 import store from "@renderer/store";
-const {ipcRenderer}=require('electron')
+
+const {ipcRenderer} = require('electron')
 
 export interface Site {
     appDir: string
@@ -40,13 +41,17 @@ export interface Site {
 //   },
 // }
 
-export const useStore = defineStore( {
-id:'site',
+export const useStore = defineStore({
+    id: 'site',
     state: (): Site => ({
         appDir: '',
         config: {},
         posts: [],
-        tags: [],
+        tags: [{
+            name: "string",
+            used: true,
+            slug: "string"
+        }],
         menus: [],
         themeConfig: {
             themeName: '',
