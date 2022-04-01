@@ -192,14 +192,17 @@
 import {   IpcRendererEvent  } from 'electron'
 const {ipcRenderer,shell}=require('electron')
 import urlJoin from 'url-join'
-import useSiteStore,{Site, } from '../../../store/modules/site'
+import {useSiteStore}  from '@renderer/store/modules/site'
 import MonacoMarkdownEditor from '../../../components/MonacoMarkdownEditor/Index.vue'
 import FooterBox from '@renderer/components/FooterBox.vue'
 import ColorCard from '../../../components/ColorCard.vue'
 import PostsCard from '../../../components/PostsCard.vue'
 import {storeToRefs} from "pinia";
+let {t}=useI18n()
 import {computed, onMounted, reactive, toRefs} from "vue";
 import {useRoute, useRouter} from "vue-router";
+import {useI18n} from "vue-i18n";
+import {ElMessage, ElMessageBox} from "element-plus";
 const store=useSiteStore()
 let router=useRouter()
 let route=useRoute()
@@ -209,25 +212,47 @@ let state=reactive({
   activeKey:''
 })
 let {form,activeKey}=toRefs(state)
+let groups=computed(() => {
+  let list =  site.currentThemeConfig.map((item: any) => item.group)
+  list = [...new Set(list)]
+  return list
+})
+
+
+let currentThemeConfig=computed(() => {
+  return  site.currentThemeConfig || []
+})
+
+let postsWithLink=computed((params) => {
+  const list =  site.posts.value.map((post: any) => {
+    return {
+      ...post,
+      link: urlJoin( site.setting.domain,  site.themeConfig.postPath, post.fileName, '/'),
+    }
+  }).filter((post: any) => post.data.published)
+
+  return list
+})
+
 onMounted(() => {
   loadCustomConfig()
 })
 
 function activated() {
-  this.loadCustomConfig()
+  loadCustomConfig()
 }
 
 function getPostTitleByLink(link: string) {
-  const foundPost = this.postsWithLink.find((post: any) => post.link === link)
+  const foundPost =  postsWithLink.value.find((post: any) => post.link === link)
   return (foundPost && foundPost.data.title) || ''
 }
 
 function loadCustomConfig() {
-  const keys = Object.keys(this.site.themeCustomConfig || {})
+  const keys = Object.keys( site.themeCustomConfig || {})
   // keys.forEach((key: string) => {
   //   this.$set(this.form, key, this.site.themeCustomConfig[key])
   // })
-  this.currentThemeConfig.forEach((item: any) => {
+  currentThemeConfig.value.forEach((item: any) => {
     if (state.form[item.name] === undefined) {
       // this.$set(this.form, item.name, item.value)
     }
@@ -239,16 +264,19 @@ function openPage(url: string) {
 }
 
 function saveThemeCustomConfig() {
-  console.log('this.form', this.form)
-  ipcRenderer.send('theme-custom-config-save', this.form)
+  console.log('this.form', state.form)
+  ipcRenderer.send('theme-custom-config-save', state.form)
   ipcRenderer.once('theme-custom-config-saved', (event: IpcRendererEvent, result: any) => {
-    this.$bus.$emit('site-reload')
-    this.$message.success(this.$t('saved').toString())
+    // this.$bus.$emit('site-reload')
+  ElMessage({
+    type:'success',
+    message:t('saved').toString()
+  })
   })
 }
 
 function resetThemeCustomConfig() {
-  this.$confirm({
+  ElMessageBox.confirm({
     title: '重置',
     content: '此操作将会使该主题配置恢复到初始状态，确认重置吗？',
     okText: '确认',
@@ -258,7 +286,10 @@ function resetThemeCustomConfig() {
       ipcRenderer.once('theme-custom-config-saved', async (event: IpcRendererEvent, result: any) => {
         await this.$bus.$emit('site-reload')
         await router.push({ name: 'loading', query: { redirect: 'theme?tab=custom' } })
-        this.$message.success(this.$t('reseted').toString())
+        ElMessage({
+          type:'success',
+          message:t('reseted').toString()
+        })
       })
     },
   })
@@ -266,18 +297,18 @@ function resetThemeCustomConfig() {
 
 function handleColorChange(color: string, name: string, arrayIndex?: number, fieldName?: string) {
   if (arrayIndex === undefined) {
-    this.form[name] = color
+    state.form[name] = color
   } else if (arrayIndex !== undefined && fieldName !== undefined) {
-    this.form[name][arrayIndex][fieldName] = color
+    state.form[name][arrayIndex][fieldName] = color
   }
 }
 
 function handlePostSelected(postUrl: string, name: string, arrayIndex?: number, fieldName?: string) {
   console.log('postUrl', postUrl)
   if (arrayIndex === undefined) {
-    this.form[name] = postUrl
+    state.form[name] = postUrl
   } else if (arrayIndex !== undefined && fieldName !== undefined) {
-    this.form[name][arrayIndex][fieldName] = postUrl
+   state.form[name][arrayIndex][fieldName] = postUrl
   }
 }
 
@@ -287,21 +318,21 @@ function beforeImageUpload(file: any, formItemName: string, arrayFieldItemName?:
   }
 
   if (arrayFieldItemName && typeof configItemIndex === 'number') {
-    this.form[formItemName][configItemIndex][arrayFieldItemName] = file.path
+    state.form[formItemName][configItemIndex][arrayFieldItemName] = file.path
     return false
   }
 
-  this.form[formItemName] = file.path
+  state.form[formItemName] = file.path
   return false
 }
 
 function resetFormItem(formItemName: string, arrayFieldItemName?: string, configItemIndex?: number) {
-  const originalItem = this.currentThemeConfig.find((item: any) => item.name === formItemName)
+  const originalItem =  currentThemeConfig.value.find((item: any) => item.name === formItemName)
   if (arrayFieldItemName && typeof configItemIndex === 'number') {
     const foundItem = originalItem.arrayItems.find((item: any) => item.name === arrayFieldItemName)
-    this.form[formItemName][configItemIndex][arrayFieldItemName] = foundItem.value
+    state.form[formItemName][configItemIndex][arrayFieldItemName] = foundItem.value
   } else {
-    this.form[formItemName] = originalItem.value
+   state.form[formItemName] = originalItem.value
   }
 }
 
@@ -318,27 +349,7 @@ function addConfigItem(formItem: any[], index: number, arrayItems: any) {
   formItem.splice(index + 1, 0, newValue)
 }
 
-let groups=computed(() => {
-  let list =  site.currentThemeConfig.map((item: any) => item.group)
-  list = [...new Set(list)]
-  return list
-})
 
-
-let currentThemeConfig=computed(() => {
-    return  site.currentThemeConfig || []
-})
-
-let postsWithLink=computed((params) => {
-  const list =  site.posts.map((post: any) => {
-    return {
-      ...post,
-      link: urlJoin( site.setting.domain,  site.themeConfig.postPath, post.fileName, '/'),
-    }
-  }).filter((post: any) => post.data.published)
-
-  return list
-})
 
 </script>
 

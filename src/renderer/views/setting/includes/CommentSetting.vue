@@ -28,7 +28,7 @@ import GitalkSetting from './GitalkSetting.vue'
 import DisqusSetting from './DisqusSetting.vue'
 import FooterBox from '@renderer/components/FooterBox.vue'
 import {onMounted, reactive, ref, toRef, toRefs} from "vue";
-import useSiteStore from "@store/site";
+import {useSiteStore} from "@store/site";
 import {storeToRefs} from "pinia";
 import {useI18n} from "vue-i18n";
 let state=reactive({

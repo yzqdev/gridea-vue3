@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <el-row type="flex" justify="end" class="tool-container">
-      <el-tooltip placement="bottom" :title="$t('newTag')">
+      <el-tooltip placement="bottom" :content="$t('newTag')">
         <div class="op-btn" tabindex="0" @click="newTag">
           <i class="zwicon-plus"></i>
         </div>
@@ -71,15 +71,15 @@ const { ipcRenderer } = require("electron");
 import { IpcRendererEvent } from "electron";
 import shortid from "shortid";
 import slug from "@helpers/slug";
-import useSiteStore, { Site } from "@renderer/store/modules/site";
+import {useSiteStore}   from "@renderer/store/modules/site";
 import { UrlFormats } from "@helpers/enums";
 import { ITag } from "@renderer/interfaces/tag";
 import {computed, onBeforeMount, onMounted, reactive} from "vue";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
 let { t } = useI18n();
-const store = useSiteStore();
-let site:any = storeToRefs(store);
+const site = useSiteStore();
+// let site:any = storeToRefs(store);
 let state = reactive({
   visible: false,
   isUpdate: false,
@@ -91,6 +91,8 @@ let state = reactive({
   },
   slugChanged: false,
 });
+
+let {visible,form,isUpdate,slugChanged}=reactive(state)
 let canSubmit = computed(() => {
   return state.form.name;
 });
@@ -110,6 +112,7 @@ function close() {
 }
 
 function newTag() {
+  console.log(`%cnewtag`,`color:red;font-size:16px;background:transparent`)
   state.form.name = null;
   state.form.index = -1;
   state.form.slug = "";
@@ -210,7 +213,8 @@ async function handleDelete(tagValue: string) {
   });
 }
 onBeforeMount(() => {
-  site.setSite()
+  console.log(`%csite store`,`color:red;font-size:16px;background:transparent`)
+  console.log(site)
 })
 onMounted(() => {
   console.log(`%c启动tag组件`,`color:red;font-size:16px;background:transparent`)

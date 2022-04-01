@@ -12,7 +12,6 @@ import {
     DEFAULT_TAG_PATH,
 } from '@helpers/constants'
 import {defineStore} from "pinia";
-import store from "@renderer/store";
 
 const {ipcRenderer} = require('electron')
 
@@ -41,7 +40,7 @@ export interface Site {
 //   },
 // }
 
-export const useStore = defineStore({
+export const useSiteStore = defineStore({
     id: 'site',
     state: (): Site => ({
         appDir: '',
@@ -160,7 +159,5 @@ export const useStore = defineStore({
         },
     },
 })
-export default function useSiteStore() {
-    return useStore(store)
-}
+
 

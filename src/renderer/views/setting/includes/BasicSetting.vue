@@ -79,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import useSiteStore from "@store/site";
+import {useSiteStore} from "@store/site";
 
 const { ipcRenderer } = require("electron");
 import {  IpcRendererEvent } from 'electron'

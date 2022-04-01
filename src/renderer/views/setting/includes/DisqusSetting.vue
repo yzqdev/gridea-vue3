@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 const {shell}=require('electron')
-import useSiteStore from "@store/site";
+import {useSiteStore} from "@store/site";
 import {storeToRefs} from "pinia";
 import {onMounted, reactive, toRefs} from "vue";
 function openPage(url: string) {

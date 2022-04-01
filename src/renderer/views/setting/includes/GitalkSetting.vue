@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import {onMounted, reactive, toRefs} from "vue";
 const {shell}=require('electron')
-import useSiteStore from "@store/site";
+import {useSiteStore} from "@store/site";
 import {storeToRefs} from "pinia";
 function openPage(url: string) {
   shell.openExternal(url)
