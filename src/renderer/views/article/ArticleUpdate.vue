@@ -321,7 +321,7 @@ import Prism from "prismjs";
 import { wordCount, timeCalc } from "@helpers/words-count";
 import markdown from "@main/server/server/plugins/markdown";
 import MonacoMarkdownEditor from "../../components/MonacoMarkdownEditor/Index.vue";
-import EmojiCard from "../../components/EmojiCard/Index.vue";
+import EmojiCard from "../../components/EmojiCard.vue";
 import slug from "@helpers/slug";
 import { IPost } from "../../interfaces/post";
 import useSiteStore,{Site, } from "../../store/modules/site";

@@ -87,7 +87,7 @@
 <script setup lang="ts">
 import useSiteStore from "@store/site";
 
-const { ipcRenderer,IpcRendererEvent } = require("electron");
+const { ipcRenderer } = require("electron");
 import urlJoin from 'url-join'
 import Draggable from 'vuedraggable'
 import { MenuTypes } from '@helpers/enums'

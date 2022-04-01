@@ -9,13 +9,11 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item :label="$t('domain')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
-        <el-input-group compact>
           <el-select v-model="protocol" style="width: 96px">
             <el-option value="https://">https://</el-option>
             <el-option value="http://">http://</el-option>
           </el-select>
           <el-input v-model="form.domain" placeholder="mydomain.com" style="width: calc(100% - 96px);" />
-        </el-input-group>
       </el-form-item>
       <template v-if="['github', 'coding'].includes(form.platform)">
         <el-form-item :label="$t('repository')" :labelCol="formLayout.label" :wrapperCol="formLayout.wrapper" :colon="false">
@@ -95,7 +93,7 @@ let {t}=useI18n()
 let store=useSiteStore()
 let site=storeToRefs(store)
 let state=reactive({
-  protocol:'https://',
+  protocol:'https://',passVisible:false,
   form:{
     platform: 'github',
     domain: '',
@@ -113,7 +111,7 @@ let state=reactive({
     remotePath: '',
   }, remoteType : 'password',detectLoading:false
 })
-let {protocol,form ,remoteType,detectLoading}=toRefs(state)
+let {protocol,form ,remoteType,detectLoading,passVisible}=toRefs(state)
 function submit() {
   // const formValid = this.checkFormValid()
   // if (!formValid) { return false }

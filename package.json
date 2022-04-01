@@ -6,7 +6,7 @@
   "description": "a template engine",
   "license": "MIT",
   "scripts": {
-    "dev": "node .electron-vite/dev-runner.js",
+    "dev": "concurrently \"vue-devtools\" \"node .electron-vite/dev-runner.js\"",
     "build": "cross-env BUILD_TARGET=clean node .electron-vite/build.js  && electron-builder -c build.json",
     "build:win32": "cross-env BUILD_TARGET=clean node .electron-vite/build.js  && electron-builder -c build.json --win  --ia32",
     "build:win64": "cross-env BUILD_TARGET=clean node .electron-vite/build.js  && electron-builder -c build.json --win  --x64",
@@ -23,7 +23,9 @@
   "dependencies": {
     "@electron/remote": "^2.0.8",
     "@iktakahiro/markdown-it-katex": "^4.0.1",
+    "@vue/devtools": "^6.1.4",
     "axios": "^0.26.1",
+    "concurrently": "^7.0.0",
     "electron-log": "^4.4.6",
     "electron-updater": "^4.6.5",
     "express": "^4.17.3",

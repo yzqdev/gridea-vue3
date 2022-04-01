@@ -3,15 +3,17 @@
 import { app, session } from "electron";
 import InitWindow from "./services/windowManager";
 import DisableButton from "./config/DisableButton";
+import devtools from "@vue/devtools";
 
 function onAppReady() {
   new InitWindow().initWindow();
   DisableButton.Disablef12();
   if (process.env.NODE_ENV === "development") {
-    const { VUEJS_DEVTOOLS } = require("electron-devtools-vendor");
-    session.defaultSession.loadExtension(VUEJS_DEVTOOLS, {
-      allowFileAccess: true,
-    });
+  //   const { VUEJS_DEVTOOLS } = require("electron-devtools-vendor");
+  //   session.defaultSession.loadExtension(VUEJS_DEVTOOLS, {
+  //     allowFileAccess: true,
+  //   });
+    devtools.connect( /* host, port */)
     console.log("已安装: vue-devtools");
   }
 }

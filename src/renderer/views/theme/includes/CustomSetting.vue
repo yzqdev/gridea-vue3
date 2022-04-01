@@ -195,8 +195,8 @@ import urlJoin from 'url-join'
 import useSiteStore,{Site, } from '../../../store/modules/site'
 import MonacoMarkdownEditor from '../../../components/MonacoMarkdownEditor/Index.vue'
 import FooterBox from '@renderer/components/FooterBox.vue'
-import ColorCard from '../../../components/ColorCard/Index.vue'
-import PostsCard from '../../../components/PostsCard/Index.vue'
+import ColorCard from '../../../components/ColorCard.vue'
+import PostsCard from '../../../components/PostsCard.vue'
 import {storeToRefs} from "pinia";
 import {computed, onMounted, reactive, toRefs} from "vue";
 import {useRoute, useRouter} from "vue-router";
