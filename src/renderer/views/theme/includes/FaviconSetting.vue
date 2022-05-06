@@ -32,7 +32,7 @@ import {   IpcRendererEvent } from 'electron'
 import   path from 'path'
 import FooterBox from '@renderer/components/FooterBox.vue'
 import {onMounted, reactive, toRefs} from "vue";
-import useSiteStore from "@store/site";
+import {useSiteStore} from "@store/site";
 import {storeToRefs} from "pinia";
 
 let state=reactive({

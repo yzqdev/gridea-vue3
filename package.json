@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "concurrently \"vue-devtools\" \"node .electron-vite/dev-runner.js\"",
     "build": "cross-env BUILD_TARGET=clean node .electron-vite/build.js  && electron-builder -c build.json",
+    "build:7z": "cross-env BUILD_TARGET=clean node .electron-vite/build.js  && electron-builder -c build.json -w=7z --x64 -p never",
     "build:win32": "cross-env BUILD_TARGET=clean node .electron-vite/build.js  && electron-builder -c build.json --win  --ia32",
     "build:win64": "cross-env BUILD_TARGET=clean node .electron-vite/build.js  && electron-builder -c build.json --win  --x64",
     "build:mac": "cross-env BUILD_TARGET=clean node .electron-vite/build.js  && electron-builder -c build.json --mac",

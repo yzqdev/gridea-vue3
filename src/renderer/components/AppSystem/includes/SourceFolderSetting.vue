@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 const {ipcRenderer,app,dialog} =require('electron')
-import useSiteStore from "@store/site";
+import {useSiteStore} from "@store/site";
 import {storeToRefs} from "pinia";
 import {onMounted, reactive, toRefs} from "vue";
 let store=useSiteStore()

@@ -147,7 +147,7 @@ import ArticleUpdate from "./ArticleUpdate.vue";
 import {storeToRefs} from "pinia";
 import {useI18n} from "vue-i18n";
 import useStoreTemplate from "@store/template";
-import useSiteStore, {Site} from "@store/site";
+import {useSiteStore} from "@store/site";
 let {t}=useI18n()
 let state=reactive({
   articleUpdateVisible : false,

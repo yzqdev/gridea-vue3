@@ -117,7 +117,7 @@ const { ipcRenderer,  shell } =require('electron')
 
 import { useField } from 'vee-validate'
 import FooterBox from '@renderer/components/FooterBox.vue'
-import useSiteStore,{Site, } from '../../../store/modules/site'
+import {useSiteStore}  from '../../../store/modules/site'
 import {
   UrlFormats,
   DEFAULT_POST_PAGE_SIZE,

@@ -140,7 +140,7 @@ const {ipcRenderer, shell} = require("electron")
 import axios from "axios";
 import AppSystem from "./AppSystem/Index.vue";
 import ISnackbar from "../interfaces/snackbar";
-import useSiteStore,{Site, } from "../store/modules/site";
+import {useSiteStore}  from "../store/modules/site";
 import pkg from "../../../package.json";
 // import markdown from "@main/server/server/plugins/markdown";
 import {onBeforeRouteUpdate, useRoute, useRouter} from "vue-router";

@@ -324,7 +324,7 @@ import MonacoMarkdownEditor from "../../components/MonacoMarkdownEditor/Index.vu
 import EmojiCard from "../../components/EmojiCard.vue";
 import slug from "@helpers/slug";
 import { IPost } from "../../interfaces/post";
-import useSiteStore,{Site, } from "../../store/modules/site";
+import {useSiteStore}  from "../../store/modules/site";
 import { UrlFormats } from "@helpers/enums";
 import shortcutKeys from "@helpers/shortcut-keys";
 import {computed, onMounted, reactive, ref, toRefs} from "vue";
